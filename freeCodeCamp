@@ -1,0 +1,25 @@
+import numpy as np
+from django.contrib.admin.templatetags.admin_list import results
+
+
+def calculate(matrix_list):
+    if len(matrix_list) < 9:
+        raise ValueError("List must contain nine numbers.")
+
+    #将列表转换为3x3的NumPy数组
+    matrix = np.array(matrix_list).reshape(3,3)
+
+    # 计算行、列和展平后的矩阵的统计数据
+    results = {}
+    results['mean'] = [np.mean(matrix,axis=0).tolist(),np.mean(matrix,axis=1).tolist(),np.mean(matrix).tolist()]
+    results['variance'] = [np.var(matrix,axis=0).tolist(),np.var(matrix,axis=1).tolist(),np.var(matrix).tolist()]
+    results['standard deviation'] = [np.std(matrix,axis=0).tolist(),np.std(matrix,axis=1).tolist(),np.std(matrix,).tolist()]
+    results['max'] = [np.max(matrix,axis=0).tolist(),np.max(matrix,axis=1).tolist(),np.max(matrix).tolist()]
+    results['min'] = [np.min(matrix,axis=0).tolist(),np.min(matrix,axis=1).tolist(),np.min(matrix).tolist()]
+    results['sum'] = [np.sum(matrix,axis=0).tolist(),np.sum(matrix,axis=1).tolist(),np.sum(matrix).tolist()]
+
+    return results
+
+if __name__ == "__main__":
+    result = calculate([0,1,2,3,4,5,6,7,8])
+    print(result)
